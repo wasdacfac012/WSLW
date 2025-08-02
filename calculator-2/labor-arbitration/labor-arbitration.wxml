@@ -1,0 +1,136 @@
+<view class="container">
+  <view class="title">劳动仲裁/诉讼时效计算器
+    <view class="title-annotation">计算劳动争议仲裁或诉讼的最长申请时间</view>
+  </view>
+  
+  <!-- 浮窗提示1：劳动仲裁时效 -->
+  <view class="floating-tip">
+    <view class="tip-header" bindtap="toggleTip1">
+      <text class="tip-title">劳动仲裁时效</text>
+      <text class="tip-arrow">{{showTip1 ? '▲' : '▼'}}</text>
+    </view>
+    <view class="tip-content {{collapsing1 ? 'collapsing' : ''}}" wx:if="{{showTip1}}">
+      <view class="tip-section">
+        <text class="tip-section-title">劳动争议仲裁申请程序相关时效规定:</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-item-title">1. 一般时效：</text>
+        <text class="tip-item-content">1年（自知道/应知权利被侵害之日起算）</text>
+      </view>
+      <view class="tip-section">
+        <text class="tip-section-title">特殊时效：</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-item-content">工伤医疗费：劳动关系终止后1年内提出</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-item-content">拖欠劳动报酬：劳动关系存续期间不受时效限制</text>
+      </view>
+      <view class="tip-section">
+        <text class="tip-section-title">时效中断：</text>
+        <text class="tip-section-desc">协商、投诉、申请调解等情形可中断并重新计算。</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-item-content">2025年某地仲裁委认定：微信聊天记录可作为时效中断证据</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 浮窗提示2：劳动纠纷诉讼时效 -->
+  <view class="floating-tip">
+    <view class="tip-header" bindtap="toggleTip2">
+      <text class="tip-title">劳动纠纷诉讼时效</text>
+      <text class="tip-arrow">{{showTip2 ? '▲' : '▼'}}</text>
+    </view>
+    <view class="tip-content {{collapsing2 ? 'collapsing' : ''}}" wx:if="{{showTip2}}">
+      <view class="tip-item">
+        <text class="tip-item-title">1. 普通时效：</text>
+        <text class="tip-item-content">1年（自知道/应知权利被侵害起算）</text>
+      </view>
+      <view class="tip-section">
+        <text class="tip-section-title">特殊时效：</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-item-content">工伤认定：30日内申请（逾期丧失权利）</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-item-content">医疗期争议：医疗期满后1年内提出</text>
+      </view>
+      <view class="tip-section">
+        <text class="tip-section-title">中断情形：</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-item-content">向劳动监察投诉</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-item-content">用人单位书面确认债务</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-item-content">仲裁时效中止（如不可抗力）</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 浮窗提示3：劳动仲裁费用 -->
+  <view class="floating-tip">
+    <view class="tip-header">
+      <text class="tip-title">劳动仲裁费用</text>
+    </view>
+    <view class="tip-content">
+      <view class="tip-section">
+        <text class="tip-section-title">※劳动仲裁本身的起诉费用:</text>
+        <text class="tip-section-desc">《中华人民共和国劳动争议调解仲裁法》第五十三条规定:劳动争议仲裁不收费。劳动争议仲裁委员会的经费由财政予以保障</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-item-title">律师常见收费方式:</text>
+        <text class="tip-item-content">1.按件收费，每件5000左右</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-item-content">2.按标的额收费:以仲裁请求涉及金额为比例付费，小于10万元通常为8%到10%，大于10万元部分可能会减免</text>
+      </view>
+    </view>
+  </view>
+  
+  <view class="input-group">
+    <text class="label">知道/应知权利被侵害之日:</text>
+    <picker mode="date" value="{{infringementDate}}" start="1900-01-01" end="2030-12-31" bindchange="bindDateChange">
+      <view class="picker">
+        {{infringementDate ? infringementDate : '请选择日期'}}
+      </view>
+    </picker>
+  </view>
+
+  <view class="input-group">
+    <text class="label">类型:</text>
+    <picker bindchange="bindTypeChange" value="{{selectedTypeIndex}}" range="{{typeOptions}}">
+      <view class="picker">
+        {{typeOptions[selectedTypeIndex]}}
+      </view>
+    </picker>
+  </view>
+
+  <button class="btn-calculate" bindtap="calculate">计算</button>
+
+  <view class="result-area" wx:if="{{result !== null}}">
+    <view class="result-item">
+      <text class="result-title">最长可申请仲裁/诉讼时间:</text>
+      <text class="result-value">{{result.date}}</text>
+    </view>
+    
+    <view class="result-item">
+      <text class="result-title">说明:</text>
+      <text class="result-value">{{result.description}}</text>
+    </view>
+    
+    <button class="btn-copy" bindtap="copyResult">复制结果</button>
+    
+    <view class="detail-toggle" bindtap="toggleDetail">
+      <text class="detail-toggle-text">{{showDetail ? '收起' : '展开'}}详细计算过程</text>
+      <text class="detail-toggle-icon">{{showDetail ? '▲' : '▼'}}</text>
+    </view>
+    
+    <view class="detail-process" wx:if="{{showDetail}}">
+      <text class="detail-content">{{detailProcess}}</text>
+    </view>
+  </view>
+</view>

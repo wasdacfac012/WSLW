@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="header">
+    <view class="title">计算器</view>
+    <view class="subtitle">覆盖常用劳动场景计算</view>
+  </view>
+
+  <!-- 图片框 -->
+  <view class="image-container" bindtap="previewImage">
+    <image class="menu-image" src="/images/lct.jpg" mode="widthFix"></image>
+    <text class="image-tip">劳动纠纷法律维权流程图</text>
+  </view>
+
+  <view class="calculator-list">
+    <block wx:for="{{calculators}}" wx:key="name">
+      <view class="calculator-item" bindtap="navigateToCalculator" data-url="{{item.url}}">
+        <view class="calc-info">
+          <view class="calc-name">{{item.name}}</view>
+        </view>
+        <view class="arrow">></view>
+      </view>
+    </block>
+  </view>
+</view>

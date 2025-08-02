@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="title">未休年假补偿计算器</view>
+  
+  <view class="input-group">
+    <text class="label">基本工资 (元/月):</text>
+    <input type="digit" class="input" placeholder="请输入基本工资" bindinput="bindKeyInput" data-field="basicSalary" />
+  </view>
+
+  <view class="input-group">
+    <text class="label">未休年假天数:</text>
+    <input type="digit" class="input" placeholder="请输入未休年假天数" bindinput="bindKeyInput" data-field="unusedLeaveDays" />
+  </view>
+
+  <button class="btn-calculate" bindtap="calculate">计算</button>
+
+  <view class="result-area" wx:if="{{result !== null}}">
+    <text class="result-title">未休年假补偿金额:</text>
+    <text class="result-value">{{result}} 元</text>
+    <button class="btn-copy" bindtap="copyResult">复制结果</button>
+    
+    <view class="detail-toggle" bindtap="toggleDetail">
+      <text class="detail-toggle-text">{{showDetail ? '收起' : '展开'}}详细计算过程</text>
+      <text class="detail-toggle-icon">{{showDetail ? '▲' : '▼'}}</text>
+    </view>
+    
+    <view class="detail-process" wx:if="{{showDetail}}">
+      <text class="detail-content">{{detailProcess}}</text>
+    </view>
+  </view>
+</view>

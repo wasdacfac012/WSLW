@@ -1,0 +1,91 @@
+<view class="container">
+  <view class="title">合并工时加班费计算器</view>
+  
+  <view class="input-group">
+    <text class="label">平时时段平均加班小时数 (H1):</text>
+    <input type="digit" class="input" placeholder="小时" bindinput="bindKeyInput" data-field="h1" />
+  </view>
+
+  <view class="input-group">
+    <text class="label">周末时段平均加班小时数 (H2):</text>
+    <input type="digit" class="input" placeholder="小时" bindinput="bindKeyInput" data-field="h2" />
+  </view>
+
+  <view class="input-group">
+    <text class="label">法定节假日平均加班小时数 (H3):</text>
+    <input type="digit" class="input" placeholder="小时" bindinput="bindKeyInput" data-field="h3" />
+  </view>
+
+  <view class="input-group">
+    <text class="label">月均工资:</text>
+    <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="monthlySalary" />
+  </view>
+
+  <view class="input-group">
+    <text class="label">加班起始日期:</text>
+    <picker mode="date" value="{{startDate}}" start="2025-01-01" end="2025-12-31" bindchange="bindDateChange" data-field="startDate">
+      <view class="picker">
+        {{startDate ? startDate : '请选择日期'}}
+      </view>
+    </picker>
+  </view>
+
+  <view class="input-group">
+    <text class="label">加班结束日期:</text>
+    <picker mode="date" value="{{endDate}}" start="2025-01-01" end="2025-12-31" bindchange="bindDateChange" data-field="endDate">
+      <view class="picker">
+        {{endDate ? endDate : '请选择日期'}}
+      </view>
+    </picker>
+  </view>
+
+  <view class="input-group">
+    <text class="label">计算模式:</text>
+    <picker mode="selector" range="{{['标准工时', '综合工时']}}" value="{{calculationMode === 'standard' ? 0 : 1}}" bindchange="bindModeChange">
+      <view class="picker">
+        {{calculationMode === 'standard' ? '标准工时' : '综合工时'}}
+      </view>
+    </picker>
+  </view>
+
+  <view class="info-section">
+    <view class="info-toggle" bindtap="toggleSalaryInfo">
+      <text class="info-toggle-text">月均工资要求 {{showSalaryInfo ? '▲' : '▼'}}</text>
+    </view>
+    <view class="info-content" wx:if="{{showSalaryInfo}}">
+      <text class="info-text">
+1. 劳动合同约定：如果劳动合同中明确约定了工资数额，包括基本工资、岗位工资、职务工资等，应当以劳动合同约定的工资作为加班费的计算基数。
+
+2. 实际工资：如果劳动合同中没有明确约定工资数额，或者合同约定不明确时，应当以实际工资作为加班费的计算基数。实际工资包括用人单位直接支付给职工的工资、奖金、津贴、补贴等，但加班费、伙食补助和劳动保护补贴等应当扣除。
+
+3. 日/小时平均工资：在确定职工日平均工资和小时平均工资时，应当按照原劳动和社会保障部《关于职工全年月平均工作时间和工资折算问题的通知》规定，以每月工作时间为21.75天和174小时进行折算。
+
+4．当月奖金：劳动者的当月奖金具有"劳动者正常工作时间工资报酬"性质的,属于工资组成部分。劳动者的当月工资与当月奖金发放日期不一致的,应将这两部分合计作为加班费计算基数。用人单位不按月、按季发放的奖金，根据实际情况判断可以不作为加班费计算基数。
+
+5. 计件单价：对于实行计件工资的劳动者，应当以法定时间内的计件单价为加班费的计算基数。
+
+6. 最低工资标准：如果加班费的计算基数低于当地当年的最低工资标准，应当以最低工资标准为基数。
+
+7. 综合计算工时：实行综合计算工时工作制的用人单位,当综合计算周期为季度或年度时,应将综合周期内的月平均工资作为加班费计算基数。
+      </text>
+    </view>
+  </view>
+
+  <button class="btn-calculate" bindtap="calculate">计算</button>
+
+  <view class="result-area" wx:if="{{result !== null}}">
+    <text class="result-title">计算结果:</text>
+    <text class="result-value">{{result}} 元</text>
+    
+    <view class="detail-toggle" bindtap="toggleDetail">
+      <text class="detail-toggle-text">{{showDetail ? '收起' : '展开'}}详细计算过程</text>
+      <text class="detail-toggle-icon">{{showDetail ? '▲' : '▼'}}</text>
+    </view>
+    
+    <view class="detail-process" wx:if="{{showDetail}}">
+      <text class="detail-content">{{detailProcess}}</text>
+    </view>
+    
+    <button class="btn-copy" bindtap="copyResult">复制结果</button>
+  </view>
+</view>

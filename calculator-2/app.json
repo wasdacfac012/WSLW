@@ -1,0 +1,27 @@
+{
+  "lazyCodeLoading": "requiredComponents",
+  "pages": [
+    "index",
+    "piecework-overtime/piecework-overtime",
+    "severance-pay/severance-pay",
+    "sick-pay/sick-pay",
+    "social-base/social-base",
+    "injury-compensation/injury-compensation",
+    "death-compensation/death-compensation",
+    "net-salary/net-salary",
+    "economic-compensation/economic-compensation",
+    "labor-arbitration/labor-arbitration",
+    "individual-income-tax/individual-income-tax",
+    "annual-leave-compensation/annual-leave-compensation",
+    "double-salary/double-salary",
+    "merged-overtime/merged-overtime"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "劳动法计算器",
+    "navigationBarTextStyle": "black"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

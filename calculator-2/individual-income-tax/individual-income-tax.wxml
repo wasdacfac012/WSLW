@@ -1,0 +1,35 @@
+<view class="container">
+  <view class="title">个人所得税计算器</view>
+  
+  <view class="input-group">
+    <text class="label">工资收入 (税前):</text>
+    <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="salary" />
+  </view>
+
+  <view class="input-group">
+    <text class="label">五险一金个人缴费:</text>
+    <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="socialSecurity" />
+  </view>
+
+  <view class="input-group">
+    <text class="label">专项扣除 (子女教育等):</text>
+    <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="specialDeduction" />
+  </view>
+
+  <button class="btn-calculate" bindtap="calculate">计算</button>
+
+  <view class="result-area" wx:if="{{result !== null}}">
+    <text class="result-title">应缴个人所得税:</text>
+    <text class="result-value">{{result}} 元</text>
+    <button class="btn-copy" bindtap="copyResult">复制结果</button>
+    
+    <view class="detail-toggle" bindtap="toggleDetail">
+      <text class="detail-toggle-text">{{showDetail ? '收起' : '展开'}}详细计算过程</text>
+      <text class="detail-toggle-icon">{{showDetail ? '▲' : '▼'}}</text>
+    </view>
+    
+    <view class="detail-process" wx:if="{{showDetail}}">
+      <text class="detail-content">{{detailProcess}}</text>
+    </view>
+  </view>
+</view>

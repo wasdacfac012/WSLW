@@ -1,0 +1,58 @@
+/* 首页特定样式 */
+
+/* 图片框样式 */
+.image-container {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30rpx;
+  padding: 20rpx;
+  background-color: #fafafa;
+  border-radius: 8rpx;
+}
+
+.menu-image {
+  width: 100%;
+  max-width: 600rpx;
+  border-radius: 4rpx;
+}
+
+.image-tip {
+  display: block;
+  margin-top: 15rpx;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.calculator-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  width: 100%;
+}
+
+.calculator-item {
+  display: flex;
+  align-items: center;
+  background-color: #fafafa;
+  padding: 30rpx;
+  border-radius: 8rpx;
+  transition: background-color 0.2s;
+}
+
+.calculator-item:active {
+  background-color: #f0f0f0;
+}
+
+.calc-info {
+  flex: 1;
+}
+
+.calc-name {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.arrow {
+  font-size: 32rpx;
+  color: #ccc;
+}

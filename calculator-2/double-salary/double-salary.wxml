@@ -1,0 +1,58 @@
+<view class="container">
+  <view class="title">双倍工资计算器</view>
+  <view class="subtitle">未签劳动合同的双倍工资计算</view>
+  
+  <view class="input-group">
+    <text class="label">实际用工开始时间:</text>
+    <picker mode="date" value="{{startDate}}" start="1970-01-01" end="2030-12-31" bindchange="bindStartDateChange">
+      <view class="picker">
+        {{startDate ? startDate : '请选择开始时间'}}
+      </view>
+    </picker>
+  </view>
+
+  <view class="input-group">
+    <text class="label">申请仲裁时间:</text>
+    <picker mode="date" value="{{arbitrationDate}}" start="1970-01-01" end="2030-12-31" bindchange="bindArbitrationDateChange">
+      <view class="picker">
+        {{arbitrationDate ? arbitrationDate : '请选择仲裁时间'}}
+      </view>
+    </picker>
+  </view>
+
+  <view class="input-group">
+    <text class="label">应发工资 (元/月):</text>
+    <input type="digit" class="input" placeholder="请输入应发工资" value="{{salary}}" bindinput="bindSalaryInput" />
+  </view>
+
+  <button class="btn-calculate" bindtap="calculate">计算</button>
+
+  <view class="result-area" wx:if="{{result !== null}}">
+    <text class="result-title">可支持第二倍工资数额:</text>
+    <text class="result-value">{{result}} 元</text>
+    <button class="btn-copy" bindtap="copyResult">复制结果</button>
+    
+    <view class="detail-toggle" bindtap="toggleDetail">
+      <text class="detail-toggle-text">{{showDetail ? '收起' : '展开'}}详细计算过程</text>
+      <text class="detail-toggle-icon">{{showDetail ? '▲' : '▼'}}</text>
+    </view>
+    
+    <view class="detail-process" wx:if="{{showDetail}}">
+      <text class="detail-content">{{detailProcess}}</text>
+    </view>
+  </view>
+
+  <!-- 法律条文说明 -->
+  <view class="legal-info">
+    <view class="legal-title">相关法律条文:</view>
+    <view class="legal-content">
+      <text>《最高人民法院关于审理劳动争议案件适用法律问题的解释（二）》 第六条 用人单位未依法与劳动者订立书面劳动合同，应当支付劳动者的二倍工资按月计算；不满一个月的，按该月实际工作日计算。</text>
+    </view>
+    <view class="legal-content">
+      <text>第七条 劳动者以用人单位未订立书面劳动合同为由，请求用人单位支付二倍工资的，人民法院依法予以支持，但用人单位举证证明存在下列情形之一的除外：</text>
+      <text>\n（一）因不可抗力导致未订立的；</text>
+      <text>\n（二）因劳动者本人故意或者重大过失未订立的；</text>
+      <text>\n（三）法律、行政法规规定的其他情形。</text>
+    </view>
+  </view>
+</view>

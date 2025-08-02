@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="title">工伤赔偿计算器</view>
+  <view class="input-group">
+    <text class="label">伤残等级:</text>
+    <picker class="input" mode="selector" range="{{disabilityLevels}}" bindchange="bindDisabilityChange">
+      <view class="picker">
+        {{selectedDisabilityLevel || "请选择伤残等级"}}
+      </view>
+    </picker>
+  </view>
+  <view class="input-group">
+    <text class="label">本人工资 (P):</text>
+    <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="p" />
+  </view>
+  <button class="btn-calculate" bindtap="calculate">计算</button>
+  <view class="result-area" wx:if="{{result !== null}}">
+    <text class="result-title">一次性补助金:</text>
+    <text class="result-value">{{result}} 元</text>
+    <button class="btn-copy" bindtap="copyResult">复制结果</button>
+    
+    <view class="detail-toggle" bindtap="toggleDetail">
+      <text class="detail-toggle-text">{{showDetail ? '收起' : '展开'}}详细计算过程</text>
+      <text class="detail-toggle-icon">{{showDetail ? '▲' : '▼'}}</text>
+    </view>
+    
+    <view class="detail-process" wx:if="{{showDetail}}">
+      <text class="detail-content">{{detailProcess}}</text>
+    </view>
+  </view>
+</view>

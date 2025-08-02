@@ -1,0 +1,35 @@
+<view class="container">
+  <view class="title">综合工时加班计算器</view>
+  
+  <view class="input-group">
+    <text class="label">非节假日超时 (H1):</text>
+    <input type="digit" class="input" placeholder="小时" bindinput="bindKeyInput" data-field="h1" />
+  </view>
+
+  <view class="input-group">
+    <text class="label">法定节假日加班 (H2):</text>
+    <input type="digit" class="input" placeholder="小时" bindinput="bindKeyInput" data-field="h2" />
+  </view>
+
+  <view class="input-group">
+    <text class="label">工资基数 (P):</text>
+    <input type="digit" class="input" placeholder="元/小时" bindinput="bindKeyInput" data-field="p" />
+  </view>
+
+  <button class="btn-calculate" bindtap="calculate">计算</button>
+
+  <view class="result-area" wx:if="{{result !== null}}">
+    <text class="result-title">计算结果:</text>
+    <text class="result-value">{{result}} 元</text>
+    <button class="btn-copy" bindtap="copyResult">复制结果</button>
+    
+    <view class="detail-toggle" bindtap="toggleDetail">
+      <text class="detail-toggle-text">{{showDetail ? '收起' : '展开'}}详细计算过程</text>
+      <text class="detail-toggle-icon">{{showDetail ? '▲' : '▼'}}</text>
+    </view>
+    
+    <view class="detail-process" wx:if="{{showDetail}}">
+      <text class="detail-content">{{detailProcess}}</text>
+    </view>
+  </view>
+</view>
