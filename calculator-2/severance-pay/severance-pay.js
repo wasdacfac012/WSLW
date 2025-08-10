@@ -153,7 +153,7 @@ Page({
     
     return {
       title: shareTitle,
-      path: '/pages/calculator/severance-pay/severance-pay',
+      path: '/severance-pay/severance-pay',
       success: (res) => {
         console.log('分享成功', res);
         wx.showToast({

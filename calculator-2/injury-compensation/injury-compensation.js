@@ -156,7 +156,7 @@ Page({
     
     return {
       title: shareTitle,
-      path: '/pages/calculator/injury-compensation/injury-compensation',
+      path: '/injury-compensation/injury-compensation',
       success: (res) => {
         console.log('分享成功', res);
         wx.showToast({

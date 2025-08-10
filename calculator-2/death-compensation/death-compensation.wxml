@@ -1,8 +1,12 @@
 <view class="container">
-  <view class="title">死亡赔偿计算器</view>
+  <view class="title">一次性工亡赔偿金计算器</view>
   
+  <view class="explanation">
+    <text class="explanation-text">2025年1月17日上午10点，国家统计局官网准时发布《2024年经济运行稳中有进 主要发展目标顺利实现》，其中城镇居民人均可支配收入54188元，根据《工伤保险条例》第39条之规定，职工因工死亡，其近亲属按照规定从工伤保险基金领取的一次性工亡补助金标准为上一年度全国城镇居民人均可支配收入的20倍。因此2025年度全国一次性工亡补助金标准统一为: 城镇居民人均可支配收入54188元×20=1083760元。 来源:人社部</text>
+  </view>
+
   <view class="input-group">
-    <text class="label">上一年度城镇居民人均可支配收入 (Pn):</text>
+    <text class="label">上一年度城镇居民人均可支配收入(Pn):</text>
     <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="pn" />
   </view>
 

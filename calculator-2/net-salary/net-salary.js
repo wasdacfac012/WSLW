@@ -161,7 +161,7 @@ ${this.data.detailProcess}
     
     return {
       title: shareTitle,
-      path: '/pages/calculator/net-salary/net-salary',
+      path: '/net-salary/net-salary',
       success: (res) => {
         console.log('分享成功', res);
         wx.showToast({

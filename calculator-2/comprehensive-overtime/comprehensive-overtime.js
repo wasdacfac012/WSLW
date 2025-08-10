@@ -123,7 +123,7 @@ Page({
     
     return {
       title: shareTitle,
-      path: '/pages/calculator/comprehensive-overtime/comprehensive-overtime',
+      path: '/comprehensive-overtime/comprehensive-overtime',
       success: (res) => {
         console.log('分享成功', res);
         wx.showToast({

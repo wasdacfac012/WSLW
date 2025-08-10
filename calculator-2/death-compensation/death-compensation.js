@@ -27,19 +27,10 @@ Page({
     const result = 20 * pnVal;
 
     // 生成详细计算过程
-    const detailProcess = `计算公式：死亡赔偿金 = 20年 × 上一年度城镇居民人均可支配收入
+    const detailProcess =` 计算公式：死亡赔偿金为二十倍的人均可支配收入
 
-输入数据：
-• 上一年度城镇居民人均可支配收入(Pn)：${pnVal} 元
-
-计算过程：
-第一步：确定赔偿年限
-根据法律规定，死亡赔偿金按20年计算
-
-第二步：计算死亡赔偿金
-死亡赔偿金 = 20 × ${pnVal}
-           = ${result.toFixed(2)} 元`;
-
+    • 上一年度城镇居民人均可支配收入${pnVal} 元
+    则死亡赔偿金为20倍的人均收入(${pnVal})=>${result.toFixed(2)} 元`;
     this.setData({
       result: result.toFixed(2),
       detailProcess: detailProcess,
@@ -67,20 +58,10 @@ Page({
     
     const resultText = `【死亡赔偿计算】
     
-计算公式：死亡赔偿金 = 20年 × 上一年度城镇居民人均可支配收入
+计算公式：死亡赔偿金为二十倍的人均可支配收入
 
-输入数据：
-• 上一年度城镇居民人均可支配收入(Pn)：${pnVal} 元
-
-计算过程：
-第一步：确定赔偿年限
-根据法律规定，死亡赔偿金按20年计算
-
-第二步：计算死亡赔偿金
-死亡赔偿金 = 20 × ${pnVal}
-           = ${this.data.result} 元
-
-最终结果：${this.data.result} 元`;
+• 上一年度城镇居民人均可支配收入每月${pnVal} 元
+则死亡赔偿金为20倍的人均收入(${pnVal})=>${this.data.result} 元`;
     
     wx.setClipboardData({
       data: resultText,
@@ -102,11 +83,11 @@ Page({
   // 分享功能
   onShareAppMessage: function () {
     const { result } = this.data;
-    const shareTitle = result ? `我用死亡赔偿计算器算出了${result}元，快来试试吧！` : '死亡赔偿计算器，快来计算你的赔偿金！';
+    const shareTitle = result ? `我用一次性工亡赔偿金计算器算出了${result}元，快来试试吧！` : '一次性工亡赔偿金计算器，快来计算你的赔偿金！';
     
     return {
       title: shareTitle,
-      path: '/pages/calculator/death-compensation/death-compensation',
+      path: '/death-compensation/death-compensation',
       success: (res) => {
         console.log('分享成功', res);
         wx.showToast({

@@ -2,7 +2,6 @@
   "lazyCodeLoading": "requiredComponents",
   "pages": [
     "index",
-    "piecework-overtime/piecework-overtime",
     "severance-pay/severance-pay",
     "sick-pay/sick-pay",
     "social-base/social-base",
@@ -14,7 +13,9 @@
     "individual-income-tax/individual-income-tax",
     "annual-leave-compensation/annual-leave-compensation",
     "double-salary/double-salary",
-    "merged-overtime/merged-overtime"
+    "documentation/documentation",
+    "economic-bcj/economics-bcj"
+   
   ],
   "window": {
     "backgroundTextStyle": "light",

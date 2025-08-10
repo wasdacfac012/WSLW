@@ -231,7 +231,7 @@ ${detailProcess}`;
     
     return {
       title: shareTitle,
-      path: '/pages/calculator/labor-arbitration/labor-arbitration',
+      path: '/labor-arbitration/labor-arbitration',
       success: (res) => {
         console.log('分享成功', res);
         wx.showToast({

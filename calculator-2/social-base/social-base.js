@@ -128,7 +128,7 @@ Page({
     
     return {
       title: shareTitle,
-      path: '/pages/calculator/social-base/social-base',
+      path: '/social-base/social-base',
       success: (res) => {
         console.log('分享成功', res);
         wx.showToast({

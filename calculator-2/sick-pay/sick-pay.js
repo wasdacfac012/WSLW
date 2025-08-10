@@ -134,7 +134,7 @@ Page({
     
     return {
       title: shareTitle,
-      path: '/pages/calculator/sick-pay/sick-pay',
+      path: '/sick-pay/sick-pay',
       success: (res) => {
         console.log('分享成功', res);
         wx.showToast({

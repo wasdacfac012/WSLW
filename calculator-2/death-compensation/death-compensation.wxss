@@ -1,5 +1,21 @@
 /* 工亡赔偿计算器特定样式 */
 
+.explanation {
+  background-color: #f0f8ff;
+  border: 1px solid #d0e6f8;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  margin: 20rpx 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.explanation-text {
+  font-size: 24rpx;
+  line-height: 1.6;
+  color: #333;
+  text-align: justify;
+}
+
 .detail-toggle {
   display: flex;
   justify-content: space-between;
@@ -11,7 +27,7 @@
 }
 
 .detail-toggle-text {
-  font-size: 28rpx;
+  font-size: 18rpx;
   color: #1989fa;
 }
 
@@ -22,7 +38,7 @@
 }
 
 .detail-process {
-  background-color: #ffffff;
+  background-color: #e5ff0080;
   border: 1px solid #e9ecef;
   border-radius: 8rpx;
   padding: 30rpx;
@@ -62,19 +78,19 @@
 .input-group {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .input {
   flex: 1;
-  border: 1px solid #ccc;
+  border: 1px solid rgb(204, 204, 204);
   padding: 10px;
   border-radius: 5px;
 }
 
 .btn-calculate {
-  width: 100%;
-  background-color: #07c160;
+  width: 50%;
+  background-color: #6ac107;
   color: white;
   margin-top: 20px;
 }

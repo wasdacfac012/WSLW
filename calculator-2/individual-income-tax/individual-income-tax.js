@@ -142,7 +142,7 @@ ${this.data.detailProcess}
     
     return {
       title: shareTitle,
-      path: '/pages/calculator/individual-income-tax/individual-income-tax',
+      path: '/individual-income-tax/individual-income-tax',
       success: (res) => {
         console.log('分享成功', res);
         wx.showToast({

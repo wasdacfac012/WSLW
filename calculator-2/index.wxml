@@ -5,9 +5,9 @@
   </view>
 
   <!-- 图片框 -->
-  <view class="image-container" bindtap="previewImage">
+  <view class="image-container" bindtap="navigateToDocumentation">
     <image class="menu-image" src="/images/lct.jpg" mode="widthFix"></image>
-    <text class="image-tip">劳动纠纷法律维权流程图</text>
+    <text class="image-tip">点击查看计算器说明文档</text>
   </view>
 
   <view class="calculator-list">
