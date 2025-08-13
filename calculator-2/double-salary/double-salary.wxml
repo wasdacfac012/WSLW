@@ -3,7 +3,7 @@
   <view class="subtitle">未签劳动合同的双倍工资计算</view>
   
   <view class="input-group">
-    <text class="label">实际用工开始时间:</text>
+    <text class="label">实际用工起始日:</text>
     <picker mode="date" value="{{startDate}}" start="1970-01-01" end="2030-12-31" bindchange="bindStartDateChange">
       <view class="picker">
         {{startDate ? startDate : '请选择开始时间'}}
@@ -46,6 +46,9 @@
   <view class="legal-info">
     <view class="legal-title">相关法律条文:</view>
     <view class="legal-content">
+      <text>《劳动合同法》第八十二条 用人单位自用工之日起超过一个月不满一年未与劳动者订立书面劳动合同的，应当向劳动者每月支付二倍的工资。</text>
+    </view>
+    <view class="legal-content">
       <text>《最高人民法院关于审理劳动争议案件适用法律问题的解释（二）》 第六条 用人单位未依法与劳动者订立书面劳动合同，应当支付劳动者的二倍工资按月计算；不满一个月的，按该月实际工作日计算。</text>
     </view>
     <view class="legal-content">
@@ -53,6 +56,12 @@
       <text>\n（一）因不可抗力导致未订立的；</text>
       <text>\n（二）因劳动者本人故意或者重大过失未订立的；</text>
       <text>\n（三）法律、行政法规规定的其他情形。</text>
+    </view>
+    <view class="legal-content">
+      <text>第八条 二倍工资适用时效的计算方法为：在劳动者主张二倍工资时，因未签劳动合同行为处于持续状态，故时效可从其主张权利之日起向前计算一年，据此实际给付的二倍工资不超过十二个月。</text>
+    </view>
+    <view class="legal-content">
+      <text>双倍工资计算方法：设B为申请仲裁时间，A为用工开始日，P为工资基数（日）则有第二倍工资等于0当B-A小于等于1个月；P*(B-A-1个月)当1小于B-A小于等于12个月；P*11个月当B-A等于13个月；P*(23个月-(B-A))当13个月小于B-A小于等于23个月；0当B-A大于23个月。</text>
     </view>
   </view>
 </view>

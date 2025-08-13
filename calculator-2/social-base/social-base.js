@@ -1,18 +1,14 @@
+
+
 Page({
   data: {
     a: null,
     c: null,
     result: null,
     showDetail: false,
-    detailProcess: ''
+    detailProcess: '',
   },
 
-  bindKeyInput: function(e) {
-    const field = e.currentTarget.dataset.field;
-    this.setData({
-      [field]: e.detail.value
-    });
-  },
 
   calculate: function() {
     const { a, c } = this.data;
@@ -144,5 +140,8 @@ Page({
         });
       }
     };
-  }
+  },
+
+
+  
 })

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工资日期计算测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7ef;
+            border-radius: 5px;
+            border-left: 4px solid #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>工资日期计算测试</h1>
+        <div class="input-group">
+            <label for="lastPayDate">上次发工资日期:</label>
+            <input type="date" id="lastPayDate">
+        </div>
+        <div class="input-group">
+            <label for="currentPayDate">本次发工资日期:</label>
+            <input type="date" id="currentPayDate" readonly>
+        </div>
+        <button onclick="calculateNextMonth()">计算下个月日期</button>
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        // 计算下个月的日期
+        function calculateNextMonthDate(dateString) {
+            if (!dateString) return '';
+            
+            // 解析日期字符串
+            const date = new Date(dateString);
+            
+            // 获取年、月、日
+            let year = date.getFullYear();
+            let month = date.getMonth(); // 0-11
+            let day = date.getDate();
+            
+            // 月份加1
+            month += 1;
+            
+            // 处理月份溢出情况
+            if (month > 11) {
+                month = 0;
+                year += 1;
+            }
+            
+            // 创建下个月的日期
+            const nextMonthDate = new Date(year, month, day);
+            
+            // 检查日期是否有效（处理2月30日等无效日期）
+            if (nextMonthDate.getMonth() !== month) {
+                // 如果日期无效，设置为该月的最后一天
+                nextMonthDate.setDate(0); // 设置为上个月的最后一天，即当前月的最后一天
+            }
+            
+            // 格式化为 YYYY-MM-DD 格式
+            const formattedYear = nextMonthDate.getFullYear();
+            const formattedMonth = String(nextMonthDate.getMonth() + 1).padStart(2, '0');
+            const formattedDay = String(nextMonthDate.getDate()).padStart(2, '0');
+            
+            return `${formattedYear}-${formattedMonth}-${formattedDay}`;
+        }
+
+        // 当上次发工资日期改变时，自动计算本次发工资日期
+        document.getElementById('lastPayDate').addEventListener('change', function() {
+            const lastPayDate = this.value;
+            if (lastPayDate) {
+                const currentPayDate = calculateNextMonthDate(lastPayDate);
+                document.getElementById('currentPayDate').value = currentPayDate;
+                
+                // 显示结果
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `<strong>自动计算结果：</strong><br>
+                                       上次发工资日期：${lastPayDate}<br>
+                                       本次发工资日期：${currentPayDate}`;
+                resultDiv.style.display = 'block';
+            }
+        });
+
+        // 手动计算按钮
+        function calculateNextMonth() {
+            const lastPayDate = document.getElementById('lastPayDate').value;
+            if (lastPayDate) {
+                const currentPayDate = calculateNextMonthDate(lastPayDate);
+                document.getElementById('currentPayDate').value = currentPayDate;
+                
+                // 显示结果
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `<strong>手动计算结果：</strong><br>
+                                       上次发工资日期：${lastPayDate}<br>
+                                       本次发工资日期：${currentPayDate}`;
+                resultDiv.style.display = 'block';
+            } else {
+                alert('请先选择上次发工资日期');
+            }
+        }
+
+        // 设置默认日期为今天
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('lastPayDate').value = today;
+        
+        // 自动计算默认的下次发工资日期
+        const defaultCurrentPayDate = calculateNextMonthDate(today);
+        document.getElementById('currentPayDate').value = defaultCurrentPayDate;
+    </script>
+</body>
+</html>

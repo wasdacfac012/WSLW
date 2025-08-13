@@ -1,21 +1,50 @@
 <view class="container">
   <view class="title">工伤赔偿计算器</view>
+  
+  <!-- 一次性工伤赔偿金输入 -->
   <view class="input-group">
-    <text class="label">伤残等级:</text>
-    <picker class="input" mode="selector" range="{{disabilityLevels}}" bindchange="bindDisabilityChange">
-      <view class="picker">
-        {{selectedDisabilityLevel || "请选择伤残等级"}}
+    <text class="label">一次性工伤赔偿金</text>
+    <view class="label-with-info">
+      <text class="label">伤残等级:</text>
+      <view class="info-icon" bindtap="showExplanation" data-field="disabilityLevel"></view>
+    </view>
+    <radio-group class="disability-table" bindchange="bindDisabilityChange">
+      <view class="table-header">
+        <text class="header-cell">等级</text>
+        <text class="header-cell">系数</text>
+        <text class="header-cell">选择</text>
       </view>
-    </picker>
+      <view class="table-row" wx:for="{{disabilityData}}" wx:key="level">
+        <text class="data-cell">{{item.level}}</text>
+        <text class="data-cell">{{item.coefficient}}倍前12个月平均月缴费工资</text>
+        <view class="data-cell">
+          <radio class="disability-radio" value="{{item.level}}" checked="{{item.checked}}"></radio>
+        </view>
+      </view>
+    </radio-group>
   </view>
+  
   <view class="input-group">
-    <text class="label">本人工资 (P):</text>
+    <view class="label-with-info">
+      <text class="label">本人工资 (月):</text>
+      <view class="info-icon" bindtap="showExplanation" data-field="salary"></view>
+    </view>
     <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="p" />
   </view>
+  
   <button class="btn-calculate" bindtap="calculate">计算</button>
+  
+  <!-- 计算结果区域 -->
   <view class="result-area" wx:if="{{result !== null}}">
     <text class="result-title">一次性补助金:</text>
     <text class="result-value">{{result}} 元</text>
+    
+    <!-- 伤残津贴显示（仅适用于1-6级伤残） -->
+    <view class="allowance-section" wx:if="{{disabilityAllowance !== null}}">
+      <text class="result-title">伤残津贴:</text>
+      <text class="result-value">{{disabilityAllowance}} 元/月</text>
+    </view>
+    
     <button class="btn-copy" bindtap="copyResult">复制结果</button>
     
     <view class="detail-toggle" bindtap="toggleDetail">
@@ -25,6 +54,63 @@
     
     <view class="detail-process" wx:if="{{showDetail}}">
       <text class="detail-content">{{detailProcess}}</text>
+    </view>
+  </view>
+  
+  <!-- 1-6级伤残津贴输入表格 -->
+  <view class="input-group">
+    <text class="label">二、1-6级伤残津贴（按月享受）</text>
+    <view class="allowance-table">
+      <view class="table-header">
+        <text class="header-cell">伤残等级</text>
+        <text class="header-cell">津贴标准</text>
+        <text class="header-cell">选择</text>
+      </view>
+      <view class="table-row">
+        <text class="data-cell">一级伤残</text>
+        <text class="data-cell">本人工资×90％</text>
+        <view class="data-cell">
+          <radio class="disability-radio" value="1" checked="{{selectedAllowanceLevel === 1}}" bindchange="bindAllowanceLevelChange"></radio>
+        </view>
+      </view>
+      <view class="table-row">
+        <text class="data-cell">二级伤残</text>
+        <text class="data-cell">本人工资×85％</text>
+        <view class="data-cell">
+          <radio class="disability-radio" value="2" checked="{{selectedAllowanceLevel === 2}}" bindchange="bindAllowanceLevelChange"></radio>
+        </view>
+      </view>
+      <view class="table-row">
+        <text class="data-cell">三级伤残</text>
+        <text class="data-cell">本人工资×80％</text>
+        <view class="data-cell">
+          <radio class="disability-radio" value="3" checked="{{selectedAllowanceLevel === 3}}" bindchange="bindAllowanceLevelChange"></radio>
+        </view>
+      </view>
+      <view class="table-row">
+        <text class="data-cell">四级伤残</text>
+        <text class="data-cell">本人工资×75％</text>
+        <view class="data-cell">
+          <radio class="disability-radio" value="4" checked="{{selectedAllowanceLevel === 4}}" bindchange="bindAllowanceLevelChange"></radio>
+        </view>
+      </view>
+      <view class="table-row">
+        <text class="data-cell">五级伤残</text>
+        <text class="data-cell">本人工资×70％</text>
+        <view class="data-cell">
+          <radio class="disability-radio" value="5" checked="{{selectedAllowanceLevel === 5}}" bindchange="bindAllowanceLevelChange"></radio>
+        </view>
+      </view>
+      <view class="table-row">
+        <text class="data-cell">六级伤残</text>
+        <text class="data-cell">本人工资×60％</text>
+        <view class="data-cell">
+          <radio class="disability-radio" value="6" checked="{{selectedAllowanceLevel === 6}}" bindchange="bindAllowanceLevelChange"></radio>
+        </view>
+      </view>
+    </view>
+    <view class="allowance-info">
+      <text class="info-text">依据《工伤保险条例》第三十五条、第三十六条规定，职工因工致残被鉴定为一级至六级伤残的，按月支付伤残津贴。</text>
     </view>
   </view>
 </view>

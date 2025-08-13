@@ -2,7 +2,7 @@
   <view class="title">未休年假补偿计算器</view>
   
   <view class="input-group">
-    <text class="label">基本工资 (元/月):</text>
+    <text class="label">应发工资 (元/月):</text>
     <input type="digit" class="input" placeholder="请输入基本工资" bindinput="bindKeyInput" data-field="basicSalary" />
   </view>
 

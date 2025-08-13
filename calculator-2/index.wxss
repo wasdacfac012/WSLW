@@ -6,14 +6,15 @@
   text-align: center;
   margin-bottom: 30rpx;
   padding: 20rpx;
-  background-color: #fafafa;
-  border-radius: 8rpx;
+  background-color: #ffffff;
+  border-radius: 12rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
 }
 
 .menu-image {
   width: 100%;
   max-width: 600rpx;
-  border-radius: 4rpx;
+  border-radius: 8rpx;
 }
 
 .image-tip {
@@ -33,14 +34,22 @@
 .calculator-item {
   display: flex;
   align-items: center;
-  background-color: #fafafa;
-  padding: 30rpx;
-  border-radius: 8rpx;
-  transition: background-color 0.2s;
+  background-color: #ffffff;
+  padding: 30rpx 25rpx;
+  border-radius: 12rpx;
+  transition: all 0.3s ease;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  border: 1rpx solid #f0f0f0;
+}
+
+.calculator-item:hover {
+  transform: translateY(-2rpx);
+  box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.08);
 }
 
 .calculator-item:active {
-  background-color: #f0f0f0;
+  background-color: #f8f8f8;
+  transform: translateY(0);
 }
 
 .calc-info {
@@ -50,9 +59,21 @@
 .calc-name {
   font-size: 28rpx;
   color: #333;
+  font-weight: 500;
 }
 
 .arrow {
   font-size: 32rpx;
   color: #ccc;
+}
+
+/* 响应式设计 */
+@media (min-width: 768px) {
+  .calculator-item {
+    padding: 35rpx 30rpx;
+  }
+  
+  .calc-name {
+    font-size: 30rpx;
+  }
 }

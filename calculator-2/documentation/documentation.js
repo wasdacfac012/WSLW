@@ -1,46 +1,66 @@
-// documentation.js
+// documentation/documentation.js
 Page({
+
+  /**
+   * 页面的初始数据
+   */
   data: {
-    imageUrl: '/images/lct.jpg'
-  },
-
-  onLoad: function (options) {
 
   },
 
-  onReady: function () {
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad(options) {
 
   },
 
-  onShow: function () {
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
 
   },
 
-  onHide: function () {
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow() {
 
   },
 
-  onUnload: function () {
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide() {
 
   },
 
-  onPullDownRefresh: function () {
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {
 
   },
 
-  onReachBottom: function () {
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh() {
 
   },
 
-  onShareAppMessage: function () {
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom() {
 
   },
 
-  // 预览图片
-  previewImage: function() {
-    wx.previewImage({
-      current: this.data.imageUrl, // 当前显示图片的链接
-      urls: [this.data.imageUrl] // 需要预览的图片链接列表
-    })
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {
+
   }
 })

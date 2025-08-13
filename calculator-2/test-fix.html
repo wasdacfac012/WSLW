@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>税后工资计算器测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group input {
+            margin-right: 10px;
+            width: auto;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, #007aff, #00d4ff);
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .result-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007aff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">税后工资计算器测试</h1>
+            <p>用于验证修复后的计算逻辑</p>
+        </div>
+
+        <div class="form">
+            <div class="form-group">
+                <label for="baseSalary">底薪 *</label>
+                <input type="number" id="baseSalary" placeholder="请输入底薪">
+            </div>
+
+            <div class="form-group">
+                <label for="averageSalary">上年度平均工资</label>
+                <input type="number" id="averageSalary" placeholder="请输入上年度平均工资">
+            </div>
+
+            <div class="form-group">
+                <label for="performanceSalary">绩效工资</label>
+                <input type="number" id="performanceSalary" placeholder="请输入绩效工资">
+            </div>
+
+            <div class="form-group">
+                <label for="commission">提成</label>
+                <input type="number" id="commission" placeholder="请输入提成">
+            </div>
+
+            <div class="form-group">
+                <label for="legalAllowance">法定津贴</label>
+                <input type="number" id="legalAllowance" placeholder="请输入法定津贴">
+            </div>
+
+            <div class="form-group">
+                <label for="subsidy">补贴</label>
+                <input type="number" id="subsidy" placeholder="请输入补贴">
+            </div>
+
+            <div class="form-group">
+                <label for="bonus">奖金</label>
+                <input type="number" id="bonus" placeholder="请输入奖金">
+            </div>
+
+            <div class="form-group">
+                <label for="specialDeduction">专项扣除</label>
+                <input type="number" id="specialDeduction" placeholder="请输入专项扣除">
+            </div>
+
+            <div class="form-group">
+                <label for="overtimePay">加班费</label>
+                <input type="number" id="overtimePay" placeholder="请输入加班费">
+            </div>
+
+            <div class="form-group">
+                <label for="otherDeduction">其它扣除</label>
+                <input type="number" id="otherDeduction" placeholder="请输入其它扣除">
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="isFullAttendance" checked>
+                <label for="isFullAttendance">是否全勤</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="autoCalculateTax" checked>
+                <label for="autoCalculateTax">自动计算个税</label>
+            </div>
+
+            <div class="checkbox-group">
+                <label for="autoCalculateInsurance">自动计算五险一金</label>
+                <input type="range" id="autoCalculateInsurance" min="0" max="1" value="1" style="margin-left: 10px;">
+                <span id="autoCalculateInsuranceLabel" style="margin-left: 10px;">是</span>
+            </div>
+
+            <button class="btn" onclick="calculate()">计算税后工资</button>
+        </div>
+
+        <div class="result" id="result">
+            <div class="result-title">计算结果</div>
+            <div>税后工资: <span class="result-value" id="resultValue">0.00</span> 元</div>
+        </div>
+    </div>
+
+    <script>
+        // 模拟工具函数
+        function calculateSocialSecurity(salary, socialBase) {
+            // 缴费比例（个人部分）
+            const pensionRate = 0.08; // 养老保险 8%
+            const medicalRate = 0.02; // 医疗保险 2%
+            const unemploymentRate = 0.005; // 失业保险 0.5%
+            const housingFundRate = 0.06; // 住房公积金 6%（这里取一个中间值）
+            
+            // 计算各项缴费金额（个人部分）
+            const pension = socialBase * pensionRate; // 养老保险
+            const medical = socialBase * medicalRate; // 医疗保险
+            const unemployment = socialBase * unemploymentRate; // 失业保险
+            const housingFund = socialBase * housingFundRate; // 住房公积金
+            
+            // 个人缴费总额
+            const total = pension + medical + unemployment + housingFund;
+            
+            return {
+                pension: pension.toFixed(2),
+                medical: medical.toFixed(2),
+                unemployment: unemployment.toFixed(2),
+                housingFund: housingFund.toFixed(2),
+                total: total.toFixed(2)
+            };
+        }
+
+        // 计算个人所得税
+        function calculateIndividualIncomeTax(salary, socialSecurity, specialDeduction = 0) {
+            // 计算应纳税所得额
+            const taxableIncome = salary - socialSecurity - specialDeduction - 5000;
+            
+            // 根据税率表计算个税
+            let tax = 0;
+            let taxRate = 0;
+            let quickDeduction = 0;
+            
+            if (taxableIncome <= 0) {
+                tax = 0;
+            } else if (taxableIncome <= 5000) {
+                taxRate = 0.05;
+                quickDeduction = 0;
+                tax = taxableIncome * taxRate - quickDeduction;
+            } else if (taxableIncome <= 10000) {
+                taxRate = 0.1;
+                quickDeduction = 250;
+                tax = taxableIncome * taxRate - quickDeduction;
+            } else if (taxableIncome <= 30000) {
+                taxRate = 0.2;
+                quickDeduction = 1250;
+                tax = taxableIncome * taxRate - quickDeduction;
+            } else if (taxableIncome <= 50000) {
+                taxRate = 0.3;
+                quickDeduction = 4250;
+                tax = taxableIncome * taxRate - quickDeduction;
+            } else {
+                taxRate = 0.35;
+                quickDeduction = 6750;
+                tax = taxableIncome * taxRate - quickDeduction;
+            }
+            
+            // 确保税额不为负数
+            tax = Math.max(0, tax);
+            
+            return {
+                taxableIncome: taxableIncome.toFixed(2),
+                taxRate: (taxRate * 100).toFixed(0),
+                quickDeduction: quickDeduction.toFixed(0),
+                tax: tax.toFixed(2)
+            };
+        }
+
+        // 计算社保公积金基数
+        function calculateSocialBase(salary, averageSalary) {
+            // 社保缴费基数上下限
+            // 一般为当地上年度职工月平均工资的60%-300%
+            const minBase = 0.6 * averageSalary; // 最低缴费基数
+            const maxBase = 3 * averageSalary;   // 最高缴费基数
+            
+            // 实际缴费基数取值规则：
+            // 如果实际工资低于最低基数，按最低基数计算
+            // 如果实际工资高于最高基数，按最高基数计算
+            // 否则按实际工资计算
+            const base = Math.max(minBase, Math.min(salary, maxBase));
+            
+            return base;
+        }
+
+        // 更新滑动按钮显示文本
+        function updateSliderLabel() {
+            const slider = document.getElementById('autoCalculateInsurance');
+            const label = document.getElementById('autoCalculateInsuranceLabel');
+            label.textContent = slider.value === '1' ? '是' : '否';
+        }
+
+        // 主计算函数
+        function calculate() {
+            // 获取所有输入数据
+            const baseSalary = parseFloat(document.getElementById('baseSalary').value) || 0;
+            const averageSalary = parseFloat(document.getElementById('averageSalary').value) || 0;
+            const performanceSalary = parseFloat(document.getElementById('performanceSalary').value) || 0;
+            const commission = parseFloat(document.getElementById('commission').value) || 0;
+            const legalAllowance = parseFloat(document.getElementById('legalAllowance').value) || 0;
+            const subsidy = parseFloat(document.getElementById('subsidy').value) || 0;
+            const bonus = parseFloat(document.getElementById('bonus').value) || 0;
+            const specialDeduction = parseFloat(document.getElementById('specialDeduction').value) || 0;
+            const overtimePay = parseFloat(document.getElementById('overtimePay').value) || 0;
+            const otherDeduction = parseFloat(document.getElementById('otherDeduction').value) || 0;
+            const isFullAttendance = document.getElementById('isFullAttendance').checked;
+            const autoCalculateTax = document.getElementById('autoCalculateTax').checked;
+            const autoCalculateInsurance = document.getElementById('autoCalculateInsurance').value === '1';
+            
+            // 检查必填项
+            if (baseSalary === 0) {
+                alert('请填写底薪');
+                return;
+            }
+            
+            // 计算固定工资W1（简化处理）
+            let W1 = baseSalary;
+            
+            // 计算可变工资W2
+            const W2 = performanceSalary + commission + legalAllowance + 
+                       subsidy + bonus + overtimePay - specialDeduction;
+            
+            // 计算个税保险费W3
+            let W3 = 0;
+            let individualTaxVal = 0;
+            let socialInsuranceVal = 0;
+            
+            if (autoCalculateTax) {
+                // 自动计算个税
+                const totalIncome = W1 + W2;
+                const taxResult = calculateIndividualIncomeTax(totalIncome, socialInsuranceVal, specialDeduction);
+                individualTaxVal = parseFloat(taxResult.tax) || 0;
+            }
+            
+            if (autoCalculateInsurance) {
+                // 自动计算五险一金
+                const totalIncome = W1 + W2;
+                // 计算社保基数（需要用户提供上年度平均工资）
+                // 如果用户输入了上年度平均工资，则使用该值计算社保基数
+                // 否则使用总收入作为基数
+                let socialBase = totalIncome;
+                if (averageSalary > 0) {
+                    // 使用工具函数计算社保基数
+                    socialBase = calculateSocialBase(totalIncome, averageSalary);
+                }
+                const insuranceResult = calculateSocialSecurity(totalIncome, socialBase);
+                socialInsuranceVal = parseFloat(insuranceResult.total) || 0;
+            }
+            
+            W3 = individualTaxVal + socialInsuranceVal;
+            
+            // 计算税后工资总额W
+            const W = W1 + W2 - W3 - otherDeduction;
+            
+            // 显示结果
+            document.getElementById('resultValue').textContent = W.toFixed(2);
+            document.getElementById('result').classList.add('show');
+        }
+
+        // 页面加载完成后初始化滑动按钮事件监听器
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.getElementById('autoCalculateInsurance');
+            slider.addEventListener('input', updateSliderLabel);
+            // 初始化显示文本
+            updateSliderLabel();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<view class="container">
+  <view class="header">
+    <view class="title">加班费计算器</view>
+  </view>
+
+  <view class="selection-group">
+    <view class="input-group">
+      <text class="label">所在省份:</text>
+      <picker bindchange="bindRegionChange" value="{{regionIndex}}" range="{{regions}}" class="picker">
+        <view class="picker-content">
+          <text class="picker-text">{{regions[regionIndex]}}</text>
+          <text class="arrow">▼</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="input-group">
+      <text class="label">工作制度:</text>
+      <view class="radio-group">
+        <view class="radio-item" bindtap="selectWorkSystem" data-system="standard">
+          <view class="radio-circle {{selectedSystem === 'standard' ? 'selected' : ''}}">
+            <view class="radio-inner" wx:if="{{selectedSystem === 'standard'}}"></view>
+          </view>
+          <text class="radio-label">标准工时工作制</text>
+        </view>
+        <view class="radio-item" bindtap="selectWorkSystem" data-system="comprehensive">
+          <view class="radio-circle {{selectedSystem === 'comprehensive' ? 'selected' : ''}}">
+            <view class="radio-inner" wx:if="{{selectedSystem === 'comprehensive'}}"></view>
+          </view>
+          <text class="radio-label">综合工时工作制</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <button class="btn-calculate" bindtap="navigateToCalculator" disabled="{{selectedSystem === null}}">下一步</button>
+</view>

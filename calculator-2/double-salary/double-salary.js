@@ -72,44 +72,61 @@ Page({
       return;
     }
     
-    // 计算工作天数（按月计算）
+    // 计算工作月数
     const workMonths = this.calculateWorkMonths(startDateObj, arbitrationDateObj);
     
     // 计算日工资
     const dailySalary = salaryVal / 21.75;
     
-    // 计算双倍工资（未签劳动合同的双倍工资差额，即额外支付的一倍工资）
-    // 根据法律条文，按月计算，不满一个月的按实际工作日计算
+    // 根据新公式计算双倍工资
     let doubleSalary = 0;
     let calculationDetail = '';
     
     if (workMonths <= 1) {
-      // 工作时间不满一个月，按实际工作日计算
+      // B-A <= 1个月，第二倍工资=0
+      doubleSalary = 0;
+      calculationDetail = `用工时间不超过1个月
+第二倍工资 = 0 元`;
+    } else if (workMonths > 1 && workMonths <= 12) {
+      // 1 < B-A <= 12个月，第二倍工资=P*(B-A)
+      // 计算工作天数
       const workDays = this.calculateWorkDays(startDateObj, arbitrationDateObj);
       doubleSalary = dailySalary * workDays;
-      calculationDetail = `工作时间不满一个月，按实际工作日计算
-实际工作天数：${workDays}天
-双倍工资差额 = 日工资 × 实际工作天数
-双倍工资差额 = ${dailySalary.toFixed(2)} × ${workDays}
-双倍工资差额 = ${doubleSalary.toFixed(2)}元`;
+      calculationDetail = `用工时间大于1个月且不超过12个月
+第二倍工资 = 日工资 × 工作天数
+第二倍工资 = ${dailySalary.toFixed(2)} × ${workDays}天
+第二倍工资 = ${doubleSalary.toFixed(2)} 元`;
+    } else if (workMonths === 13) {
+      // B-A = 13个月，第二倍工资=P*11个月
+      doubleSalary = salaryVal * 11;
+      calculationDetail = `用工时间为13个月
+第二倍工资 = 月工资 × 11个月
+第二倍工资 = ${salaryVal.toFixed(2)} × 11
+第二倍工资 = ${doubleSalary.toFixed(2)} 元`;
+    } else if (workMonths > 13 && workMonths <= 24) {
+      // 13个月 < B-A <= 24个月，第二倍工资=P*(24个月-(B-A))
+      const months = 24 - workMonths;
+      doubleSalary = salaryVal * months;
+      calculationDetail = `用工时间大于13个月且不超过24个月
+第二倍工资 = 月工资 × (23个月 - 实际用工月数)
+第二倍工资 = ${salaryVal.toFixed(2)} × (23 - ${workMonths})
+第二倍工资 = ${salaryVal.toFixed(2)} × ${months}
+第二倍工资 = ${doubleSalary.toFixed(2)} 元`;
     } else {
-      // 工作时间超过一个月，按月计算
-      // 根据劳动合同法，用人单位自用工之日起超过一个月不满一年未与劳动者订立书面劳动合同的，
-      // 应当向劳动者每月支付二倍的工资，起算时间为用工之日起满一个月的次日
-      const eligibleMonths = workMonths - 1; // 第一个月不计算双倍工资
-      doubleSalary = salaryVal * eligibleMonths;
-      calculationDetail = `工作时间超过一个月，按月计算双倍工资
-应计算双倍工资的月数：${eligibleMonths}个月
-双倍工资差额 = 月工资 × 应计算双倍工资的月数
-双倍工资差额 = ${salaryVal.toFixed(2)} × ${eligibleMonths}
-双倍工资差额 = ${doubleSalary.toFixed(2)}元`;
+      // B-A > 24个月，第二倍工资=0
+      doubleSalary = 0;
+      calculationDetail = `用工时间超过24个月
+第二倍工资 = 0 元`;
     }
     
     // 生成详细计算过程
-    const detailProcess = `根据《劳动合同法》《最高人民法院关于审理劳动争议案件适用法律问题的解释（二）》相关规定：
-用人单位未依法与劳动者订立书面劳动合同，应当支付劳动者的二倍工资按月计算；不满一个月的，按该月实际工作日计算。
-
-计算公式：双倍工资差额 = 应发工资 - 正常工资（即额外支付的一倍工资）
+    const detailProcess = `根据双倍工资计算公式：
+设B为申请仲裁时间，A为用工开始日，P为工资基数（日）
+则有第二倍工资等于0当B-A小于等于1个月
+                        P*(B-A)当1小于B-A小于等于12个月
+                        P*11个月当B-A等于13个月
+                        P*(24个月-(B-A))当13个月小于B-A小于等于24个月
+                        0当B-A大于24个月
 
 输入数据：
 • 实际用工开始时间：${startDate}
@@ -117,15 +134,15 @@ Page({
 • 应发工资：${salaryVal.toFixed(2)} 元/月
 
 计算过程：
-第一步：计算日工资
+第一步：计算工作时间
+• 工作月数：${workMonths}个月
+
+第二步：计算日工资
 日工资 = 月工资 ÷ 21.75
 日工资 = ${salaryVal.toFixed(2)} ÷ 21.75
 日工资 = ${dailySalary.toFixed(2)} 元/天
 
-第二步：计算工作时间
-${workMonths <= 1 ? '工作时间不满一个月' : '工作时间超过一个月'}
-
-第三步：计算双倍工资差额
+第三步：根据公式计算双倍工资
 ${calculationDetail}
 
 最终结果：${doubleSalary.toFixed(2)} 元`;

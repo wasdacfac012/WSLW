@@ -1,3 +1,5 @@
+
+
 Page({
   data: {
     y: null,
@@ -5,15 +7,10 @@ Page({
     pm: null,
     result: null,
     showDetail: false,
-    detailProcess: ''
+    detailProcess: '',
+
   },
 
-  bindKeyInput: function(e) {
-    const field = e.currentTarget.dataset.field;
-    this.setData({
-      [field]: e.detail.value
-    });
-  },
 
   calculate: function() {
     const { y, d, pm } = this.data;
@@ -82,13 +79,13 @@ Page({
     const dVal = parseFloat(d) || 0;
     const pmVal = parseFloat(pm) || 0;
     
-    const dailyMinWage = (pmVal * 8) / 21.75;
+    const dailyMinWage = (pmVal ) / 21.75;
     const actualDays = Math.min(yVal, dVal);
     
     const resultText = `【病假工资计算】
     
 计算公式：病假工资 = min(病假天数, 疾病休假天数) × 日最低工资
-其中：日最低工资 = (最低月工资标准 × 8小时) ÷ 21.75天
+其中：日最低工资 = (最低月工资标准 ) ÷ 21.75天
 
 输入数据：
 • 病假天数(Y)：${yVal} 天
@@ -97,8 +94,8 @@ Page({
 
 计算过程：
 第一步：计算日最低工资
-日最低工资 = (${pmVal} × 8) ÷ 21.75
-           = ${(pmVal * 8).toFixed(2)} ÷ 21.75
+日最低工资 = (${pmVal} ) ÷ 21.75
+           = ${(pmVal ).toFixed(2)} ÷ 21.75
            = ${dailyMinWage.toFixed(2)} 元/天
 
 第二步：确定病假工资计算天数
@@ -150,5 +147,8 @@ Page({
         });
       }
     };
-  }
+  },
+
+
+ 
 })

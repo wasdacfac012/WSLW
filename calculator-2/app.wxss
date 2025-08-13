@@ -17,26 +17,44 @@ page {
 /* 极简风格通用样式 */
 .container {
   background-color: #ffffff;
-  padding: 40rpx 30rpx;
+  padding: 40rpx 20rpx;
   min-height: 100vh;
   border-radius: 8rpx;
+  max-width: 750rpx;
+  margin: 0 auto;
 }
 
 .header {
   margin-bottom: 30rpx;
   text-align: center;
+  padding: 0 20rpx;
 }
 
 .title {
-  font-size: 36rpx;
+  font-size: 42rpx;
   font-weight: bold;
   color: #333;
   margin-bottom: 10rpx;
+  position: relative;
+  display: inline-block;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: -10rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60rpx;
+  height: 6rpx;
+  background: linear-gradient(90deg, #4CAF50, #007aff);
+  border-radius: 3rpx;
 }
 
 .subtitle {
-  font-size: 24rpx;
-  color: #999;
+  font-size: 26rpx;
+  color: #666;
+  margin-top: 20rpx;
 }
 
 .input-group {

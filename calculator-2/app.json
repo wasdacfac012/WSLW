@@ -2,6 +2,9 @@
   "lazyCodeLoading": "requiredComponents",
   "pages": [
     "index",
+    "overtime-pay/overtime-pay",
+    "standard-overtime/standard-overtime",
+    "comprehensive-overtime/comprehensive-overtime",
     "severance-pay/severance-pay",
     "sick-pay/sick-pay",
     "social-base/social-base",
@@ -14,8 +17,9 @@
     "annual-leave-compensation/annual-leave-compensation",
     "double-salary/double-salary",
     "documentation/documentation",
-    "economic-bcj/economics-bcj"
-   
+    "economic-bcj/economics-bcj",
+    "after-tax-salary/after-tax-salary",
+    "social-insurance/social-insurance"
   ],
   "window": {
     "backgroundTextStyle": "light",

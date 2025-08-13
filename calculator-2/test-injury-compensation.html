@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>工伤赔偿计算器测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1890ff;
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #1890ff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #40a9ff;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            border-left: 4px solid #1890ff;
+        }
+        .disability-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .disability-table th, .disability-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        .disability-table th {
+            background-color: #f0f8ff;
+        }
+        .allowance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .allowance-table th, .allowance-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        .allowance-table th {
+            background-color: #f0f8ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>工伤赔偿计算器测试</h1>
+        
+        <div class="input-group">
+            <label for="disabilityLevel">伤残等级:</label>
+            <select id="disabilityLevel">
+                <option value="1">一级</option>
+                <option value="2">二级</option>
+                <option value="3">三级</option>
+                <option value="4">四级</option>
+                <option value="5">五级</option>
+                <option value="6">六级</option>
+                <option value="7">七级</option>
+                <option value="8">八级</option>
+                <option value="9">九级</option>
+                <option value="10">十级</option>
+            </select>
+        </div>
+        
+        <div class="input-group">
+            <label for="salary">本人工资 (元):</label>
+            <input type="number" id="salary" placeholder="请输入本人平均月缴费工资">
+        </div>
+        
+        <button onclick="calculate()">计算</button>
+        
+        <div id="result" class="result" style="display: none;"></div>
+        
+        <h2>伤残等级系数表</h2>
+        <table class="disability-table">
+            <tr>
+                <th>等级</th>
+                <th>系数</th>
+            </tr>
+            <tr>
+                <td>一级</td>
+                <td>27倍前12个月平均月缴费工资</td>
+            </tr>
+            <tr>
+                <td>二级</td>
+                <td>25倍前12个月平均月缴费工资</td>
+            </tr>
+            <tr>
+                <td>三级</td>
+                <td>23倍前12个月平均月缴费工资</td>
+            </tr>
+            <tr>
+                <td>四级</td>
+                <td>21倍前12个月平均月缴费工资</td>
+            </tr>
+            <tr>
+                <td>五级</td>
+                <td>18倍前12个月平均月缴费工资</td>
+            </tr>
+            <tr>
+                <td>六级</td>
+                <td>16倍前12个月平均月缴费工资</td>
+            </tr>
+            <tr>
+                <td>七级</td>
+                <td>13倍前12个月平均月缴费工资</td>
+            </tr>
+            <tr>
+                <td>八级</td>
+                <td>11倍前12个月平均月缴费工资</td>
+            </tr>
+            <tr>
+                <td>九级</td>
+                <td>9倍前12个月平均月缴费工资</td>
+            </tr>
+            <tr>
+                <td>十级</td>
+                <td>7倍前12个月平均月缴费工资</td>
+            </tr>
+        </table>
+        
+        <h2>二、1-6级伤残津贴（按月享受）</h2>
+        <p>依据《工伤保险条例》第三十五条、第三十六条规定，职工因工致残被鉴定为一级至六级伤残的，按月支付伤残津贴，标准如下：</p>
+        
+        <table class="allowance-table">
+            <tr>
+                <th>伤残等级</th>
+                <th>津贴标准</th>
+            </tr>
+            <tr>
+                <td>一级伤残</td>
+                <td>本人工资×90％</td>
+            </tr>
+            <tr>
+                <td>二级伤残</td>
+                <td>本人工资×85％</td>
+            </tr>
+            <tr>
+                <td>三级伤残</td>
+                <td>本人工资×80％</td>
+            </tr>
+            <tr>
+                <td>四级伤残</td>
+                <td>本人工资×75％</td>
+            </tr>
+            <tr>
+                <td>五级伤残</td>
+                <td>本人工资×70％</td>
+            </tr>
+            <tr>
+                <td>六级伤残</td>
+                <td>本人工资×60％</td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function calculate() {
+            const disabilityLevel = parseInt(document.getElementById('disabilityLevel').value);
+            const salary = parseFloat(document.getElementById('salary').value);
+            
+            if (isNaN(salary) || salary <= 0) {
+                alert('请输入有效的工资金额');
+                return;
+            }
+            
+            // 伤残等级系数
+            const coefficients = {
+                1: 27, 2: 25, 3: 23, 4: 21, 5: 18, 6: 16, 7: 13, 8: 11, 9: 9, 10: 7
+            };
+            
+            const coefficient = coefficients[disabilityLevel];
+            const result = coefficient * salary;
+            
+            let resultHTML = `<h3>计算结果</h3>`;
+            resultHTML += `<p><strong>一次性工伤赔偿金:</strong> ${result.toFixed(2)} 元</p>`;
+            
+            // 计算伤残津贴（仅适用于1-6级伤残）
+            if (disabilityLevel >= 1 && disabilityLevel <= 6) {
+                const allowanceRates = {
+                    1: 0.90,  // 一级伤残：本人工资×90％
+                    2: 0.85,  // 二级伤残：本人工资×85％
+                    3: 0.80,  // 三级伤残：本人工资×80％
+                    4: 0.75,  // 四级伤残：本人工资×75％
+                    5: 0.70,  // 五级伤残：本人工资×70％
+                    6: 0.60   // 六级伤残：本人工资×60％
+                };
+                
+                const allowanceRate = allowanceRates[disabilityLevel];
+                const disabilityAllowance = salary * allowanceRate;
+                
+                resultHTML += `<p><strong>伤残津贴:</strong> ${disabilityAllowance.toFixed(2)} 元/月</p>`;
+                resultHTML += `<p><em>依据《工伤保险条例》第三十五条、第三十六条规定，职工因工致残被鉴定为一级至六级伤残的，按月支付伤残津贴。</em></p>`;
+            }
+            
+            resultHTML += `<h4>计算过程</h4>`;
+            resultHTML += `<p>计算公式：工伤赔偿金 = 伤残等级系数 × 本人平均月缴费工资</p>`;
+            resultHTML += `<p>工伤赔偿金 = ${coefficient} × ${salary} = ${result.toFixed(2)} 元</p>`;
+            
+            if (disabilityLevel >= 1 && disabilityLevel <= 6) {
+                const allowanceRates = {
+                    1: 0.90, 2: 0.85, 3: 0.80, 4: 0.75, 5: 0.70, 6: 0.60
+                };
+                const allowanceRate = allowanceRates[disabilityLevel];
+                const disabilityAllowance = salary * allowanceRate;
+                
+                resultHTML += `<p>伤残津贴 = ${salary} × ${allowanceRate} = ${disabilityAllowance.toFixed(2)} 元/月</p>`;
+            }
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

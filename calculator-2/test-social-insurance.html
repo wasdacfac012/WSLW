@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五险一金计算器测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007aff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            display: none;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .total {
+            font-weight: bold;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        .switch-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .manual-inputs {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>五险一金计算器测试</h1>
+        
+        <div class="input-group">
+            <label for="salary">工资总额 (元):</label>
+            <input type="number" id="salary" placeholder="请输入工资总额">
+        </div>
+        
+        <div class="input-group">
+            <label for="averageSalary">上年度社会平均工资 (元):</label>
+            <input type="number" id="averageSalary" placeholder="用于计算社保基数（选填）">
+        </div>
+        
+        <div class="switch-container">
+            <span>是否自动计算五险一金:</span>
+            <label class="switch">
+                <input type="checkbox" id="autoCalculate" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div id="manualInputs" class="manual-inputs">
+            <div class="input-group">
+                <label for="socialBase">社保缴费基数 (元):</label>
+                <input type="number" id="socialBase" placeholder="手动输入社保缴费基数">
+            </div>
+            
+            <div class="input-group">
+                <label for="pensionRate">养老保险费率 (%):</label>
+                <input type="number" id="pensionRate" placeholder="默认8%" value="8">
+            </div>
+            
+            <div class="input-group">
+                <label for="medicalRate">医疗保险费率 (%):</label>
+                <input type="number" id="medicalRate" placeholder="默认2%" value="2">
+            </div>
+            
+            <div class="input-group">
+                <label for="unemploymentRate">失业保险费率 (%):</label>
+                <input type="number" id="unemploymentRate" placeholder="默认0.5%" value="0.5">
+            </div>
+            
+            <div class="input-group">
+                <label for="housingFundRate">住房公积金费率 (%):</label>
+                <input type="number" id="housingFundRate" placeholder="默认6%" value="6">
+            </div>
+        </div>
+        
+        <button onclick="calculate()">计算</button>
+        
+        <div id="result" class="result">
+            <h3>五险一金缴费明细:</h3>
+            <div class="result-item">
+                <span>养老保险:</span>
+                <span id="pension">0.00 元</span>
+            </div>
+            <div class="result-item">
+                <span>医疗保险:</span>
+                <span id="medical">0.00 元</span>
+            </div>
+            <div class="result-item">
+                <span>失业保险:</span>
+                <span id="unemployment">0.00 元</span>
+            </div>
+            <div class="result-item">
+                <span>住房公积金:</span>
+                <span id="housingFund">0.00 元</span>
+            </div>
+            <div class="result-item total">
+                <span>个人缴费总额:</span>
+                <span id="total">0.00 元</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 计算社保公积金缴费金额
+        function calculateSocialSecurity(salary, socialBase) {
+            // 获取费率设置
+            const pensionRate = parseFloat(document.getElementById('pensionRate').value) || 8;      // 养老保险费率 8%
+            const medicalRate = parseFloat(document.getElementById('medicalRate').value) || 2;       // 医疗保险费率 2%
+            const unemploymentRate = parseFloat(document.getElementById('unemploymentRate').value) || 0.5; // 失业保险费率 0.5%
+            const housingFundRate = parseFloat(document.getElementById('housingFundRate').value) || 6;     // 住房公积金费率 6%
+            
+            // 计算各项缴费金额（个人部分）
+            const pension = socialBase * pensionRate / 100; // 养老保险
+            const medical = socialBase * medicalRate / 100; // 医疗保险
+            const unemployment = socialBase * unemploymentRate / 100; // 失业保险
+            const housingFund = socialBase * housingFundRate / 100; // 住房公积金
+            
+            // 个人缴费总额
+            const total = pension + medical + unemployment + housingFund;
+            
+            return {
+                pension: pension.toFixed(2),
+                medical: medical.toFixed(2),
+                unemployment: unemployment.toFixed(2),
+                housingFund: housingFund.toFixed(2),
+                total: total.toFixed(2)
+            };
+        }
+
+        // 计算社保公积金基数
+        function calculateSocialBase(salary, averageSalary) {
+            // 社保缴费基数上下限
+            // 一般为当地上年度职工月平均工资的60%-300%
+            const minBase = 0.6 * averageSalary; // 最低缴费基数
+            const maxBase = 3 * averageSalary;   // 最高缴费基数
+            
+            // 实际缴费基数取值规则：
+            // 如果实际工资低于最低基数，按最低基数计算
+            // 如果实际工资高于最高基数，按最高基数计算
+            // 否则按实际工资计算
+            const base = Math.max(minBase, Math.min(salary, maxBase));
+            
+            return base;
+        }
+
+        // 计算五险一金
+        function calculate() {
+            // 获取输入值
+            const salary = parseFloat(document.getElementById('salary').value);
+            const averageSalary = parseFloat(document.getElementById('averageSalary').value);
+            const socialBase = parseFloat(document.getElementById('socialBase').value);
+            const autoCalculate = document.getElementById('autoCalculate').checked;
+            
+            // 检查必填项
+            if (isNaN(salary) || salary <= 0) {
+                alert('请填写有效的工资总额');
+                return;
+            }
+            
+            let base = 0;
+            
+            if (autoCalculate) {
+                // 自动计算社保基数
+                if (!isNaN(averageSalary) && averageSalary > 0) {
+                    base = calculateSocialBase(salary, averageSalary);
+                } else {
+                    // 如果没有提供上年度平均工资，则使用工资总额作为基数
+                    base = salary;
+                }
+            } else {
+                // 手动计算模式
+                base = (!isNaN(socialBase) && socialBase > 0) ? socialBase : salary;
+            }
+            
+            // 计算五险一金
+            const result = calculateSocialSecurity(salary, base);
+            
+            // 显示结果
+            document.getElementById('pension').textContent = result.pension + ' 元';
+            document.getElementById('medical').textContent = result.medical + ' 元';
+            document.getElementById('unemployment').textContent = result.unemployment + ' 元';
+            document.getElementById('housingFund').textContent = result.housingFund + ' 元';
+            document.getElementById('total').textContent = result.total + ' 元';
+            
+            document.getElementById('result').style.display = 'block';
+        }
+
+        // 监听滑动按钮变化
+        document.getElementById('autoCalculate').addEventListener('change', function() {
+            const manualInputs = document.getElementById('manualInputs');
+            if (this.checked) {
+                manualInputs.style.display = 'none';
+            } else {
+                manualInputs.style.display = 'block';
+            }
+        });
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 可以在这里添加初始化代码
+        });
+    </script>
+</body>
+</html>

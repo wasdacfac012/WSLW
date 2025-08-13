@@ -1,0 +1,103 @@
+<view class="container">
+  <view class="title">五险一金计算器</view>
+  
+  <view class="input-section">
+    <!-- 必填项 -->
+    <view class="section-title">基本信息</view>
+    
+    <view class="input-group">
+      <text class="label">工资总额:</text>
+      <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="salary" />
+    </view>
+    
+    <view class="input-group">
+      <text class="label">上年度社会平均工资(月):</text>
+      <input type="digit" class="input" placeholder="用于计算社保基数（选填）" bindinput="bindKeyInput" data-field="averageSalary" />
+    </view>
+    
+    <!-- 滑动按钮控制是否自动计算 -->
+    <view class="section-title">计算设置</view>
+    
+    <view class="switch-group" data-active="{{autoCalculate ? 'true' : 'false'}}">
+      <text class="label">是否自动计算五险一金:</text>
+      <button class="toggle-button {{autoCalculate ? 'active' : ''}}" bindtap="toggleAutoCalculate">
+        {{autoCalculate ? '是' : '否'}}
+      </button>
+    </view>
+    
+    <!-- 手动输入社保基数 -->
+    <view wx:if="{{!autoCalculate}}">
+      <view class="input-group">
+        <text class="label">社保缴费基数:</text>
+        <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="socialBase" />
+      </view>
+    </view>
+    
+    <!-- 手动设置各项费率 -->
+    <view wx:if="{{!autoCalculate}}" class="rate-section">
+      <view class="section-title">各项费率设置</view>
+      
+      <view class="input-group">
+        <text class="label">养老保险费率 (个人):</text>
+        <input type="digit" class="input" placeholder="默认8%" bindinput="bindKeyInput" data-field="pensionRate" />
+      </view>
+      
+      <view class="input-group">
+        <text class="label">医疗保险费率 (个人):</text>
+        <input type="digit" class="input" placeholder="默认2%" bindinput="bindKeyInput" data-field="medicalRate" />
+      </view>
+      
+      <view class="input-group">
+        <text class="label">失业保险费率 (个人):</text>
+        <input type="digit" class="input" placeholder="默认0.5%" bindinput="bindKeyInput" data-field="unemploymentRate" />
+      </view>
+      
+      <view class="input-group">
+        <text class="label">住房公积金费率 (个人):</text>
+        <input type="digit" class="input" placeholder="默认6%" bindinput="bindKeyInput" data-field="housingFundRate" />
+      </view>
+    </view>
+  </view>
+
+  <button class="btn-calculate" bindtap="calculate">计算</button>
+
+  <view class="result-area" wx:if="{{result !== null}}">
+    <text class="result-title">五险一金缴费明细:</text>
+    
+    <view class="result-item">
+      <text class="item-label">养老保险:</text>
+      <text class="item-value">{{result.pension}} 元</text>
+    </view>
+    
+    <view class="result-item">
+      <text class="item-label">医疗保险:</text>
+      <text class="item-value">{{result.medical}} 元</text>
+    </view>
+    
+    <view class="result-item">
+      <text class="item-label">失业保险:</text>
+      <text class="item-value">{{result.unemployment}} 元</text>
+    </view>
+    
+    <view class="result-item">
+      <text class="item-label">住房公积金:</text>
+      <text class="item-value">{{result.housingFund}} 元</text>
+    </view>
+    
+    <view class="result-total">
+      <text class="total-label">个人缴费总额:</text>
+      <text class="total-value">{{result.total}} 元</text>
+    </view>
+    
+    <button class="btn-copy" bindtap="copyResult">复制结果</button>
+    
+    <view class="detail-toggle" bindtap="toggleDetail">
+      <text class="detail-toggle-text">{{showDetail ? '收起' : '展开'}}详细计算过程</text>
+      <text class="detail-toggle-icon">{{showDetail ? '▲' : '▼'}}</text>
+    </view>
+    
+    <view class="detail-process" wx:if="{{showDetail}}">
+      <text class="detail-content">{{detailProcess}}</text>
+    </view>
+  </view>
+</view>

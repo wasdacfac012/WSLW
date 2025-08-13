@@ -3,7 +3,7 @@
 /* 页面容器样式优化 */
 .container {
   padding: 20rpx;
-  background-color: #f5f5f5;
+  background-color: #f0f0f0;
   min-height: 100vh;
 }
 

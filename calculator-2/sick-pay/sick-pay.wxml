@@ -2,17 +2,23 @@
   <view class="title">病假工资计算器</view>
   
   <view class="input-group">
-    <text class="label">病假天数 (Y):</text>
+    <view class="label-with-info">
+      <text class="label">病假天数:</text>
+      <view class="info-icon" bindtap="showExplanation" data-field="days"></view>
+    </view>
     <input type="digit" class="input" placeholder="天" bindinput="bindKeyInput" data-field="y" />
   </view>
 
   <view class="input-group">
-    <text class="label">疾病休假天数 (D):</text>
+    <text class="label">医疗期:</text>
     <input type="digit" class="input" placeholder="天" bindinput="bindKeyInput" data-field="d" />
   </view>
 
   <view class="input-group">
-    <text class="label">最低月工资标准 (Pm):</text>
+    <view class="label-with-info">
+      <text class="label">最低月工资标准:</text>
+      <view class="info-icon" bindtap="showExplanation" data-field="salary"></view>
+    </view>
     <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="pm" />
   </view>
 

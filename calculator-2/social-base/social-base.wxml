@@ -1,11 +1,17 @@
 <view class="container">
-  <view class="title">社保公积金基数核定</view>
+  <view class="title">社保公积金基数</view>
   <view class="input-group">
-    <text class="label">实际工资 (A):</text>
+    <view class="label-with-info">
+      <text class="label">实际工资:</text>
+      <view class="info-icon" bindtap="showExplanation" data-field="salary"></view>
+    </view>
     <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="a" />
   </view>
   <view class="input-group">
-    <text class="label">社平工资 (C):</text>
+    <view class="label-with-info">
+      <text class="label">上年度社会平均工资:</text>
+      <view class="info-icon" bindtap="showExplanation" data-field="base"></view>
+    </view>
     <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="c" />
   </view>
   <button class="btn-calculate" bindtap="calculate">计算</button>

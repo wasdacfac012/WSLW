@@ -1,6 +1,5 @@
 <view class="container">
   <view class="title">劳动仲裁/诉讼时效计算器
-    <view class="title-annotation">计算劳动争议仲裁或诉讼的最长申请时间</view>
   </view>
   
   <!-- 浮窗提示1：劳动仲裁时效 -->

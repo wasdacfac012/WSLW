@@ -43,7 +43,7 @@ Page({
     const compensation = dailySalary * unusedLeaveDaysVal * 3;
     
     // 生成详细计算过程
-    const detailProcess = `计算公式：未休年假补偿 = 日工资 × 未休年假天数 × 300%
+    const detailProcess = `计算公式：未休年假补偿 = 日工资 × 未休年假天数 × 200%
 其中：日工资 = 月工资 ÷ 21.75
 
 输入数据：
@@ -57,8 +57,8 @@ Page({
 
 第二步：计算未休年假补偿
 根据《劳动法》规定，未休年假补偿按照日工资的300%支付
-未休年假补偿 = ${dailySalary.toFixed(2)} × ${unusedLeaveDaysVal} × 300%
-            = ${dailySalary.toFixed(2)} × ${unusedLeaveDaysVal} × 3
+未休年假补偿 = ${dailySalary.toFixed(2)} × ${unusedLeaveDaysVal} × 200%
+            = ${dailySalary.toFixed(2)} × ${unusedLeaveDaysVal} × 2
             = ${compensation.toFixed(2)} 元
 
 最终结果：${compensation.toFixed(2)} 元`;

@@ -1,0 +1,164 @@
+<view class="container">
+  <view class="title">税后工资计算器</view>
+  
+  <!-- 工资组成说明 -->
+  <view class="explanation" style="margin: 0; border-radius: 0;">
+    <view class="explanation-header" bindtap="toggleExplanation">
+      <text class="explanation-title">工资总额组成说明</text>
+      <text class="explanation-toggle {{showExplanation ? 'active' : ''}}">{{showExplanation ? '收起' : '展开'}}</text>
+    </view>
+    
+    <view class="explanation-content" wx:if="{{showExplanation}}">
+      <view class="explanation-section">
+        <text class="section-content">
+        工资总额由下列六个部分组成：
+        （一）计时工资;
+        （二）计件工资；
+        （三）奖金；
+        （四）津贴和补贴；
+        （五）加班加点工资；
+        （六）特殊情况下支付的工资。
+        </text>
+      </view>
+    </view>
+  </view>
+  
+  <view class="input-section" style="margin: 0; border-radius: 0;">
+    <!-- 时间周期项目 -->
+    <view class="section-title">时间周期项目</view>
+    
+    <view class="input-group">
+      <text class="label">上次发工资日期:</text>
+      <picker mode="date" value="{{lastPayDate}}" start="1900-01-01" end="2100-12-31" bindchange="bindDateChange" data-field="lastPayDate">
+        <view class="picker">
+          {{lastPayDate ? lastPayDate : '请选择日期'}}
+        </view>
+      </picker>
+    </view>
+    
+    <view class="input-group">
+      <text class="label">本次发工资日期:</text>
+      <picker mode="date" value="{{currentPayDate}}" start="1900-01-01" end="2100-12-31" bindchange="bindDateChange" data-field="currentPayDate">
+        <view class="picker">
+          {{currentPayDate ? currentPayDate : '请选择日期'}}
+        </view>
+      </picker>
+    </view>
+    
+    <view class="input-group">
+      <text class="label">缺勤天数:</text>
+      <input type="digit" class="input" placeholder="发薪周期内请假天数（选填）" bindinput="bindKeyInput" data-field="absentDays" />
+    </view>
+    
+    <view class="input-group">
+      <text class="label">出勤天数:</text>
+      <input type="digit" class="input" placeholder="缺勤超过21天时填写（选填）" bindinput="bindKeyInput" data-field="workDays" />
+    </view>
+    
+    <view class="input-group">
+      <text class="label">上年度职工平均工资:</text>
+      <input type="digit" class="input" placeholder="用于计算社保基数（选填）" bindinput="bindKeyInput" data-field="averageSalary" />
+    </view>
+    
+    <!-- 必选项 -->
+    <view class="section-title">必填项目</view>
+    
+    <view class="input-group">
+      <view class="label-with-info">
+        <text class="label">底薪:</text>
+        <view class="info-icon" bindtap="showExplanation" data-field="salary">ℹ️</view>
+      </view>
+      <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="baseSalary" />
+    </view>
+    
+    <view class="input-group">
+      <text class="label">绩效工资:</text>
+      <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="performanceSalary" />
+    </view>
+    
+    <view class="input-group">
+      <text class="label">提成:</text>
+      <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="commission" />
+    </view>
+    
+    <view class="input-group">
+      <text class="label">法定津贴:</text>
+      <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="legalAllowance" />
+    </view>
+    
+    <view class="input-group">
+      <text class="label">补贴:</text>
+      <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="subsidy" />
+    </view>
+    
+    <view class="input-group">
+      <text class="label">奖金:</text>
+      <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="bonus" />
+    </view>
+    
+    <view class="input-group">
+      <text class="label">专项扣除:</text>
+      <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="specialDeduction" />
+    </view>
+    
+    <!-- 可选项 -->
+    <view class="section-title">可选项目</view>
+    
+    <view class="input-group">
+      <text class="label">加班费:</text>
+      <input type="digit" class="input" placeholder="元（选填）" bindinput="bindKeyInput" data-field="overtimePay" />
+    </view>
+    
+    <view class="input-group" wx:if="{{!autoCalculateTax}}">
+      <text class="label">个税:</text>
+      <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="individualTax" />
+    </view>
+    
+    <view class="input-group" wx:if="{{!autoCalculateInsurance}}">
+      <text class="label">五险一金:</text>
+      <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="socialInsurance" />
+    </view>
+    
+    <view class="input-group">
+      <text class="label">其它增加扣除费用:</text>
+      <input type="digit" class="input" placeholder="元（选填）" bindinput="bindKeyInput" data-field="otherDeduction" />
+    </view>
+    
+    <!-- 选择项 -->
+    <view class="section-title">选择项</view>
+    
+    <view class="switch-group">
+      <text class="label">是否全勤:</text>
+      <switch checked="{{isFullAttendance}}" bindchange="bindSwitchChange" data-field="isFullAttendance" />
+    </view>
+    
+    <view class="switch-group">
+      <text class="label">是否自动计算个税:</text>
+      <switch checked="{{autoCalculateTax}}" bindchange="bindSwitchChange" data-field="autoCalculateTax" />
+    </view>
+    
+      <view class="switch-group" data-active="{{autoCalculateInsurance ? 'true' : 'false'}}">
+        <text class="label">是否自动计算五险一金:</text>
+        <button class="toggle-button {{autoCalculateInsurance ? 'active' : ''}}" bindtap="toggleAutoCalculate" data-field="autoCalculateInsurance">
+          {{autoCalculateInsurance ? '是' : '否'}}
+        </button>
+      </view>
+  </view>
+
+  <button class="btn-calculate" bindtap="calculate">计算</button>
+
+  <view class="result-area" wx:if="{{result !== null}}" style="margin: 0; border-radius: 0;">
+    <text class="result-title">税后工资:</text>
+    <text class="result-value">{{result}} 元</text>
+    <button class="btn-copy" bindtap="copyResult">复制结果</button>
+    
+    <view class="detail-toggle {{showDetail ? 'active' : ''}}" bindtap="toggleDetail">
+      <text class="detail-toggle-text">{{showDetail ? '收起' : '展开'}}详细计算过程</text>
+      <text class="detail-toggle-icon">{{showDetail ? '▲' : '▼'}}</text>
+    </view>
+    
+    <view class="detail-process" wx:if="{{showDetail}}">
+      <text class="detail-content">{{detailProcess}}</text>
+    </view>
+  </view>
+</view>

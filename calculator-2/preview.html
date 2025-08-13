@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>劳动法计算器大全</title>
+    <style>
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-color: #1890ff;
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .calculator-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .calculator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .calculator-card h3 {
+            margin-top: 0;
+            color: #1890ff;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>劳动法计算器大全</h1>
+        <p>10个专业计算工具，帮助您维护劳动权益</p>
+    </div>
+    
+    <div class="calculator-grid">
+        <div class="calculator-card" onclick="window.open('test-injury-compensation.html', '_blank')">
+            <h3>工伤赔偿计算器</h3>
+            <p>计算工伤赔偿金和伤残津贴</p>
+            <p>支持1-10级伤残等级计算</p>
+        </div>
+        
+        <div class="calculator-card">
+            <h3>个人所得税计算器</h3>
+            <p>计算个人所得税</p>
+            <p>支持五险一金扣除</p>
+        </div>
+        
+        <div class="calculator-card">
+            <h3>未休年假补偿</h3>
+            <p>计算未休年假补偿金</p>
+            <p>支持不同工作年限计算</p>
+        </div>
+        
+        <div class="calculator-card">
+            <h3>双倍工资计算器</h3>
+            <p>计算未签劳动合同双倍工资</p>
+            <p>支持11个月双倍工资计算</p>
+        </div>
+        
+        <div class="calculator-card">
+            <h3>经济赔偿金</h3>
+            <p>计算违法解除劳动合同赔偿金</p>
+            <p>支持N倍月工资计算</p>
+        </div>
+        
+        <div class="calculator-card">
+            <h3>病假工资</h3>
+            <p>计算病假期间工资</p>
+            <p>支持不同工龄计算标准</p>
+        </div>
+        
+        <div class="calculator-card">
+            <h3>社保公积金基数</h3>
+            <p>计算社保公积金缴费基数</p>
+            <p>支持上下限计算</p>
+        </div>
+        
+        <div class="calculator-card">
+            <h3>一次性工亡赔偿金</h3>
+            <p>计算工亡赔偿金</p>
+            <p>包含丧葬费和抚恤金</p>
+        </div>
+        
+        <div class="calculator-card">
+            <h3>税后工资计算器</h3>
+            <p>计算税后实际收入</p>
+            <p>支持五险一金扣除</p>
+        </div>
+        
+        <div class="calculator-card">
+            <h3>劳动仲裁/诉讼时效</h3>
+            <p>计算劳动仲裁申请时效</p>
+            <p>支持特殊情况计算</p>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>© 2023 劳动法计算器大全 - 专业维护劳动者权益</p>
+        <p>依据《劳动法》《劳动合同法》《工伤保险条例》等法律法规</p>
+    </div>
+</body>
+</html>

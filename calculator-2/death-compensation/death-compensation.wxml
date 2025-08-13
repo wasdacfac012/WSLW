@@ -6,7 +6,7 @@
   </view>
 
   <view class="input-group">
-    <text class="label">上一年度城镇居民人均可支配收入(Pn):</text>
+    <text class="label">上一年度城镇居民人均可支配收入(年):</text>
     <input type="digit" class="input" placeholder="元" bindinput="bindKeyInput" data-field="pn" />
   </view>
 
