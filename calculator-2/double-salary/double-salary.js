@@ -103,9 +103,9 @@ Page({
 第二倍工资 = 月工资 × 11个月
 第二倍工资 = ${salaryVal.toFixed(2)} × 11
 第二倍工资 = ${doubleSalary.toFixed(2)} 元`;
-    } else if (workMonths > 13 && workMonths <= 24) {
+    } else if (workMonths > 13 && workMonths <= 23) {
       // 13个月 < B-A <= 24个月，第二倍工资=P*(24个月-(B-A))
-      const months = 24 - workMonths;
+      const months = 23 - workMonths;
       doubleSalary = salaryVal * months;
       calculationDetail = `用工时间大于13个月且不超过24个月
 第二倍工资 = 月工资 × (23个月 - 实际用工月数)
@@ -115,27 +115,20 @@ Page({
     } else {
       // B-A > 24个月，第二倍工资=0
       doubleSalary = 0;
-      calculationDetail = `用工时间超过24个月
+      calculationDetail = `用工时间超过23个月
 第二倍工资 = 0 元`;
     }
     
     // 生成详细计算过程
-    const detailProcess = `根据双倍工资计算公式：
-设B为申请仲裁时间，A为用工开始日，P为工资基数（日）
-则有第二倍工资等于0当B-A小于等于1个月
-                        P*(B-A)当1小于B-A小于等于12个月
-                        P*11个月当B-A等于13个月
-                        P*(24个月-(B-A))当13个月小于B-A小于等于24个月
-                        0当B-A大于24个月
-
+    const detailProcess = `
 输入数据：
 • 实际用工开始时间：${startDate}
 • 申请仲裁时间：${arbitrationDate}
 • 应发工资：${salaryVal.toFixed(2)} 元/月
 
 计算过程：
-第一步：计算工作时间
-• 工作月数：${workMonths}个月
+第一步：计算时间差
+• 开始用工至仲裁时间差：${workMonths}个月
 
 第二步：计算日工资
 日工资 = 月工资 ÷ 21.75

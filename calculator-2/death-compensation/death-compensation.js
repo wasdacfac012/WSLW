@@ -27,9 +27,9 @@ Page({
     const result = 20 * pnVal;
 
     // 生成详细计算过程
-    const detailProcess =` 计算公式：死亡赔偿金为二十倍的人均可支配收入
+    const detailProcess =` 计算公式：死亡赔偿金为二十倍的人均可支配收入(年收入)
 
-    • 上一年度城镇居民人均可支配收入${pnVal} 元
+    • 上一年度城镇居民人均可支配收入每年${pnVal} 元
     则死亡赔偿金为20倍的人均收入(${pnVal})=>${result.toFixed(2)} 元`;
     this.setData({
       result: result.toFixed(2),
@@ -58,9 +58,9 @@ Page({
     
     const resultText = `【死亡赔偿计算】
     
-计算公式：死亡赔偿金为二十倍的人均可支配收入
+计算公式：死亡赔偿金为二十倍的人均可支配收入(年收入)
 
-• 上一年度城镇居民人均可支配收入每月${pnVal} 元
+• 上一年度城镇居民人均可支配收入每年${pnVal} 元
 则死亡赔偿金为20倍的人均收入(${pnVal})=>${this.data.result} 元`;
     
     wx.setClipboardData({

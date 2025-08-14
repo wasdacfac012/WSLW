@@ -58,7 +58,7 @@ Page({
     }
 
     // 生成详细计算过程
-    const detailProcess = `计算公式：经济补偿金 = 补偿年限系数 × 月工资 
+    const detailProcess = `计算公式：经济补偿金 = 补偿年限 × 月工资 
 
 输入数据：
 • 工作月数(N)：${nVal} 个月

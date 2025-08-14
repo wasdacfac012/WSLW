@@ -15,7 +15,7 @@
     </view>
 
     <view class="input-group">
-      <text class="label">工作制度:</text>
+      <text class="label">工时制度:</text>
       <view class="radio-group">
         <view class="radio-item" bindtap="selectWorkSystem" data-system="standard">
           <view class="radio-circle {{selectedSystem === 'standard' ? 'selected' : ''}}">
